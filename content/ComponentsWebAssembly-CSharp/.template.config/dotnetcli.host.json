@@ -8,6 +8,10 @@
     "Hosted": {
       "longName": "hosted"
     },
+    "Serverless": {
+      "longName": "serverless",
+      "shortName": "func"
+    },
     "PWA": {
       "longName": "pwa"
     },

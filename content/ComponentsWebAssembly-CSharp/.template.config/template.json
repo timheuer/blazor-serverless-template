@@ -6,10 +6,10 @@
     "Blazor",
     "WebAssembly"
   ],
-  "name": "Blazor WebAssembly App (SWA)",
+  "name": "Blazor WebAssembly App",
   "defaultName": "WebApplication",
   "description": "A project template for creating a Blazor app that runs on WebAssembly and is optionally hosted by an ASP.NET Core app. This template can be used for web apps with rich dynamic user interfaces (UIs).",
-  "groupIdentity": "Microsoft.Web.Blazor.Wasm2",
+  "groupIdentity": "Microsoft.Web.Blazor.Wasm",
   "precedence": "6001",
   "guids": [
     "4C26868E-5E7C-458D-82E3-040509D0C71F",
@@ -19,11 +19,11 @@
     "09732173-2cef-46b7-83db-1334bcb079d3", // Tenant ID
     "53bc9b9d-9d6a-45d4-8429-2a2761773502" // Client ID
   ],
-  "identity": "Microsoft.Web.Blazor.Wasm2.CSharp",
+  "identity": "Microsoft.Web.Blazor.Wasm.CSharp",
   "preferNameDirectory": true,
   "primaryOutputs": [
     {
-      "condition": "(Hosted && (HostIdentifier == \"dotnetcli\" || HostIdentifier == \"dotnetcli-preview\"))",
+      "condition": "(Hosted || Serverless) && (HostIdentifier == \"dotnetcli\" || HostIdentifier == \"dotnetcli-preview\"))",
       "path": "ComponentsWebAssembly-CSharp.sln"
     },
     {
@@ -31,19 +31,23 @@
       "path": "Server/ComponentsWebAssembly-CSharp.Server.csproj"
     },
     {
-      "condition": "(!Hosted)",
+      "condition": "(Serverless && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "path": "Serverless/ComponentsWebAssembly-CSharp.Serverless.csproj"
+    },
+    {
+      "condition": "(!Hosted && !Serverless)",
       "path": "ComponentsWebAssembly-CSharp.Client.csproj"
     },
     {
-      "condition": "(Hosted && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "condition": "((Hosted || Serverless) && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "Client/ComponentsWebAssembly-CSharp.Client.csproj"
     },
     {
-      "condition": "(Hosted && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "condition": "((Hosted || Serverless) && HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
       "path": "Shared/ComponentsWebAssembly-CSharp.Shared.csproj"
     }
   ],
-  "shortName": "blazorwasmswa",
+  "shortName": "blazorwasm",
   "sourceName": "ComponentsWebAssembly-CSharp",
   "sources": [
     {
@@ -54,10 +58,11 @@
       ],
       "modifiers": [
         {
-          "condition": "(!Hosted)",
+          "condition": "(!Hosted && !Serverless)",
           "exclude": [
             "Server/**",
             "Shared/**",
+            "Serverless/**",
             "*.sln"
           ],
           "rename": {
@@ -243,6 +248,12 @@
       "datatype": "bool",
       "defaultValue": "false",
       "description": "If specified, includes an ASP.NET Core host for the Blazor WebAssembly app."
+    },
+    "Serverless": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "If specified, includes an Azure Functions serverless project."
     },
     "auth": {
       "type": "parameter",
