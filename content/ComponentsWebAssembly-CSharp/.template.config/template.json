@@ -181,7 +181,7 @@
           ]
         },
         {
-          "condition": "((!Hosted || !Serverless) && NoAuth)",
+          "condition": "((!Hosted && !Serverless) && NoAuth)",
           "rename": {
             "Client/Shared/MainLayout.NoAuth.razor": "Shared/MainLayout.razor"
           },
