@@ -49,18 +49,20 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        @*#if (Hosted)
+        var serviceUri = Configuration["WeatherForecastUrl"];
+
+        @*#if (Hosted || Serverless)
             @*#if (!NoAuth)
         try
         {
-            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(serviceUri);
         }
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }
             #else
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(serviceUri);
             #endif*@
         #else
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
