@@ -3,8 +3,9 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 #endif*@
-@*#if  (Hosted)
+@*#if  (Hosted || Serverless)
 @using ComponentsWebAssembly_CSharp.Shared
+@inject IConfiguration Configuration
 #endif*@
 @*#if  (!NoAuth && Hosted)
 @attribute [Authorize]
